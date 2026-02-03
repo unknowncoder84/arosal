@@ -9,6 +9,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Neon cyan accent colors
+        neon: {
+          cyan: "#00ffff",
+          cyanGlow: "rgba(0, 255, 255, 0.5)",
+          cyanDim: "rgba(0, 255, 255, 0.3)",
+        },
+        // Professional cream colors
+        cream: {
+          50: '#fdfcfb',
+          100: '#faf8f5',
+          200: '#f5f1ea',
+          300: '#ebe4d8',
+          400: '#ddd2bf',
+          500: '#c9b8a0',
+          600: '#b39d7f',
+          700: '#9a8264',
+          800: '#7d6a52',
+          900: '#655543',
+        },
+        professional: {
+          dark: '#1a1a1a',
+          gray: '#4a4a4a',
+          light: '#f8f6f3',
+          accent: '#d4a574',
+          gold: '#c9a96e',
+        },
+        // Dark mode backgrounds
+        background: {
+          primary: "#0a0a0a",
+          secondary: "#111111",
+          card: "rgba(17, 17, 17, 0.5)",
+        },
+        // Text colors
+        text: {
+          primary: "#ffffff",
+          secondary: "#a0a0a0",
+          muted: "#666666",
+        },
+        // Legacy colors (keeping for backward compatibility)
         primary: {
           50: "#e6f9ff",
           100: "#ccf3ff",
@@ -89,9 +128,46 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "tech-pattern": "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300d4ff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
+      backdropBlur: {
+        xs: '2px',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }: any) {
+      const newUtilities = {
+        '.glassmorphism': {
+          background: 'rgba(17, 17, 17, 0.5)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+        },
+        '.glassmorphism-strong': {
+          background: 'rgba(17, 17, 17, 0.7)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+        },
+        '.glassmorphism-light': {
+          background: 'rgba(17, 17, 17, 0.3)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+        },
+        '.neon-border': {
+          border: '1px solid rgba(0, 255, 255, 0.3)',
+        },
+        '.neon-border-focus': {
+          border: '1px solid rgba(0, 255, 255, 0.8)',
+          boxShadow: '0 0 10px rgba(0, 255, 255, 0.3)',
+        },
+        '.neon-glow': {
+          boxShadow: '0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.2)',
+        },
+        '.neon-glow-strong': {
+          boxShadow: '0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.3)',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 };
 
 export default config;

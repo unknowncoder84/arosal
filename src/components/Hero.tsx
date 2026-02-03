@@ -3,118 +3,14 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Button from "./ui/Button";
+import ScrambleText from "./ScrambleText";
+import MouseGlow from "./MouseGlow";
 
 interface HeroProps {
   headline: string;
   subheadline: string;
   ctaText: string;
   ctaHref: string;
-}
-
-function FloatingParticles() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-primary-500 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0],
-            opacity: [0, 1, 0],
-            scale: [0, 1.5, 0],
-          }}
-          transition={{
-            duration: 5 + Math.random() * 5,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function CircuitLines() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent"
-          style={{
-            top: `${20 + i * 15}%`,
-            width: "200%",
-            left: "-50%",
-          }}
-          animate={{
-            x: ["-50%", "0%"],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      ))}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={`v-${i}`}
-          className="absolute w-px bg-gradient-to-b from-transparent via-primary-500 to-transparent"
-          style={{
-            left: `${20 + i * 15}%`,
-            height: "200%",
-            top: "-50%",
-          }}
-          animate={{
-            y: ["-50%", "0%"],
-          }}
-          transition={{
-            duration: 10 + i * 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function GlowingOrbs() {
-  return (
-    <>
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary-500/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-      />
-    </>
-  );
 }
 
 export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroProps) {
@@ -135,19 +31,13 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center bg-dark-primary overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center bg-background-primary overflow-hidden"
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dark-primary via-dark-secondary to-dark-card" />
-      <div className="absolute inset-0 bg-tech-pattern opacity-50" />
-      
-      {mounted && (
-        <>
-          <GlowingOrbs />
-          <CircuitLines />
-          <FloatingParticles />
-        </>
-      )}
+      {/* Mouse Glow Effect */}
+      {mounted && <MouseGlow color="rgba(0, 255, 255, 0.15)" size={600} blur={80} />}
+
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background-primary via-background-secondary to-background-primary" />
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -157,8 +47,8 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
           transition={{ duration: 0.6 }}
           className="mb-6"
         >
-          <span className="inline-block px-4 py-2 bg-primary-500/10 border border-primary-500/30 rounded-full text-primary-400 text-sm font-medium">
-            Software Solutions
+          <span className="inline-block px-4 py-2 glassmorphism-light border border-neon-cyan/30 rounded-full text-neon-cyan text-sm font-medium">
+            Next-Gen Software Solutions
           </span>
         </motion.div>
 
@@ -168,16 +58,24 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
         >
-          <span className="glow-text bg-gradient-to-r from-white via-primary-300 to-white bg-clip-text text-transparent">
-            {headline}
-          </span>
+          {mounted ? (
+            <ScrambleText 
+              text={headline}
+              duration={2000}
+              className="inline-block bg-gradient-to-r from-white via-neon-cyan to-white bg-clip-text text-transparent"
+            />
+          ) : (
+            <span className="inline-block bg-gradient-to-r from-white via-neon-cyan to-white bg-clip-text text-transparent">
+              {headline}
+            </span>
+          )}
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto"
+          className="text-lg sm:text-xl md:text-2xl text-text-secondary mb-10 max-w-3xl mx-auto"
         >
           {subheadline}
         </motion.p>
@@ -188,10 +86,19 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button size="lg" onClick={handleCtaClick} className="btn-pulse">
+          <Button 
+            size="lg" 
+            onClick={handleCtaClick}
+            className="bg-neon-cyan/10 text-neon-cyan border-2 border-neon-cyan hover:bg-neon-cyan hover:text-background-primary transition-all duration-300 hover:shadow-lg hover:shadow-neon-cyan/50"
+          >
             {ctaText}
           </Button>
-          <Button size="lg" variant="outline" onClick={handleCtaClick}>
+          <Button 
+            size="lg" 
+            variant="outline" 
+            onClick={handleCtaClick}
+            className="border-2 border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/10 hover:border-neon-cyan transition-all duration-300"
+          >
             View Our Work
           </Button>
         </motion.div>
@@ -206,19 +113,19 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
           {[
             { value: "50+", label: "Projects" },
             { value: "50+", label: "Happy Clients" },
-            { value: "Expert", label: "Team" },
+            { value: "100%", label: "Satisfaction" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 + index * 0.1 }}
-              className="text-center"
+              className="text-center glassmorphism-light rounded-lg p-4 border border-neon-cyan/20"
             >
-              <div className="text-2xl sm:text-3xl font-bold text-primary-400 glow-text">
+              <div className="text-2xl sm:text-3xl font-bold text-neon-cyan">
                 {stat.value}
               </div>
-              <div className="text-sm text-gray-500">{stat.label}</div>
+              <div className="text-sm text-text-secondary">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -234,12 +141,12 @@ export default function Hero({ headline, subheadline, ctaText, ctaHref }: HeroPr
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-6 h-10 border-2 border-primary-500/50 rounded-full flex justify-center pt-2"
+          className="w-6 h-10 border-2 border-neon-cyan/50 rounded-full flex justify-center pt-2"
         >
           <motion.div
             animate={{ opacity: [0.5, 1, 0.5], y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-1.5 h-3 bg-primary-500 rounded-full"
+            className="w-1.5 h-3 bg-neon-cyan rounded-full shadow-lg shadow-neon-cyan/50"
           />
         </motion.div>
       </motion.div>

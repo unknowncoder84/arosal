@@ -1,7 +1,7 @@
 "use client";
 
-import { ButtonHTMLAttributes, forwardRef } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { forwardRef } from "react";
+import { motion } from "framer-motion";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "outline";
@@ -15,12 +15,12 @@ interface ButtonProps {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = "", variant = "primary", size = "md", children, disabled, type = "button", onClick, ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-primary disabled:opacity-50 disabled:cursor-not-allowed";
+    const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed";
     
     const variants = {
-      primary: "bg-gradient-to-r from-primary-500 to-secondary-500 text-white hover:from-primary-400 hover:to-secondary-400 focus:ring-primary-500 shadow-lg hover:shadow-primary-500/30",
-      secondary: "bg-dark-card text-white hover:bg-dark-border focus:ring-primary-500 border border-primary-500/30",
-      outline: "border-2 border-primary-500 text-primary-400 hover:bg-primary-500/10 focus:ring-primary-500",
+      primary: "bg-neon-cyan/10 text-neon-cyan border-2 border-neon-cyan hover:bg-neon-cyan hover:text-background-primary hover:shadow-lg hover:shadow-neon-cyan/50",
+      secondary: "glassmorphism text-white hover:bg-neon-cyan/10 border border-neon-cyan/30 hover:border-neon-cyan",
+      outline: "border-2 border-neon-cyan/30 text-neon-cyan hover:bg-neon-cyan/10 hover:border-neon-cyan",
     };
 
     const sizes = {
@@ -36,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         onClick={onClick}
         whileHover={disabled ? {} : { scale: 1.02 }}
-        whileTap={disabled ? {} : { scale: 0.98 }}
+        whileTap={disabled ? {} : { scale: 0.95 }}
         className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       >
         {children}

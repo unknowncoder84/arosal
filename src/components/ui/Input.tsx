@@ -17,14 +17,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-white mb-2">
             {label}
           </label>
         )}
         <input
           ref={ref}
-          className={`w-full px-4 py-3 bg-dark-primary border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-white placeholder-gray-500 ${
-            error ? "border-red-500 bg-red-500/10" : "border-dark-border hover:border-primary-500/50"
+          className={`w-full px-4 py-3 bg-background-secondary/50 border rounded-lg transition-all duration-200 focus:outline-none text-white placeholder-text-muted ${
+            error 
+              ? "border-red-500/50 focus:border-red-500 focus:shadow-lg focus:shadow-red-500/20" 
+              : "border-neon-cyan/20 hover:border-neon-cyan/40 focus:border-neon-cyan focus:shadow-lg focus:shadow-neon-cyan/20"
           } ${className}`}
           {...props}
         />
@@ -41,14 +43,16 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-white mb-2">
             {label}
           </label>
         )}
         <textarea
           ref={ref}
-          className={`w-full px-4 py-3 bg-dark-primary border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none text-white placeholder-gray-500 ${
-            error ? "border-red-500 bg-red-500/10" : "border-dark-border hover:border-primary-500/50"
+          className={`w-full px-4 py-3 bg-background-secondary/50 border rounded-lg transition-all duration-200 focus:outline-none resize-none text-white placeholder-text-muted ${
+            error 
+              ? "border-red-500/50 focus:border-red-500 focus:shadow-lg focus:shadow-red-500/20" 
+              : "border-neon-cyan/20 hover:border-neon-cyan/40 focus:border-neon-cyan focus:shadow-lg focus:shadow-neon-cyan/20"
           } ${className}`}
           {...props}
         />

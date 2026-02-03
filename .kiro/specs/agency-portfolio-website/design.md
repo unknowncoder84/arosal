@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document outlines the technical design for a modern agency portfolio website built with React and Next.js. The website will be a single-page application with smooth scroll navigation, responsive design, and engaging animations. The tech stack prioritizes performance, developer experience, and modern web standards.
+This document outlines the technical design for a futuristic software agency portfolio website (arosal.site) built with Next.js 14. The website features a dark mode theme with glassmorphism effects, neon cyan accents, high-end animations including scramble text, mouse-tracking glow, 3D tilt effects, custom cursor, and infinite marquee.
 
 **Tech Stack:**
 - **Framework**: Next.js 14 (App Router)
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS with custom dark theme
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **Form Handling**: React Hook Form with Zod validation
@@ -14,36 +14,128 @@ This document outlines the technical design for a modern agency portfolio websit
 
 ## Architecture
 
-The application follows a component-based architecture with clear separation of concerns:
-
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                        Next.js App                          │
 ├─────────────────────────────────────────────────────────────┤
 │  Layout (app/layout.tsx)                                    │
-│  ├── Navigation Component                                   │
+│  ├── Custom Cursor Component                                │
+│  ├── Glassmorphism Navigation                               │
 │  ├── Page Content (app/page.tsx)                           │
-│  │   ├── Hero Section                                       │
-│  │   ├── About Section                                      │
-│  │   ├── Services Section                                   │
-│  │   ├── Portfolio Section                                  │
-│  │   ├── Team Section                                       │
-│  │   └── Contact Section                                    │
-│  └── Footer Component                                       │
+│  │   ├── Hero Section (Scramble Text + Mouse Glow)         │
+│  │   ├── Infinite Marquee Background                        │
+│  │   ├── Stats Section (Animated Counters)                  │
+│  │   ├── Services Section (Expand/Glow Cards)              │
+│  │   ├── Portfolio Section (Bento Grid + 3D Tilt)          │
+│  │   └── Contact Section (Neon Borders + Haptic Button)    │
+│  └── Footer Component (Glassmorphism)                       │
 ├─────────────────────────────────────────────────────────────┤
 │  Shared Components                                          │
-│  ├── UI Components (Button, Card, Input, etc.)             │
-│  ├── Animation Wrappers                                     │
-│  └── Section Container                                      │
+│  ├── UI Components (Button, Card, Input with neon styling) │
+│  ├── ScrambleText Component                                 │
+│  ├── MouseGlow Component                                    │
+│  ├── CustomCursor Component                                 │
+│  ├── InfiniteMarquee Component                              │
+│  └── AnimatedCounter Component                              │
 ├─────────────────────────────────────────────────────────────┤
 │  Utilities & Hooks                                          │
+│  ├── useMousePosition                                       │
 │  ├── useScrollAnimation                                     │
 │  ├── useIntersectionObserver                               │
 │  └── Form validation schemas                                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
+## Design System
+
+### Color Palette
+```typescript
+const colors = {
+  background: {
+    primary: '#0a0a0a',    // Deep black
+    secondary: '#111111',   // Slightly lighter black
+    card: 'rgba(17, 17, 17, 0.5)', // Glassmorphism
+  },
+  neon: {
+    cyan: '#00ffff',        // Primary accent
+    cyanGlow: 'rgba(0, 255, 255, 0.5)',
+  },
+  text: {
+    primary: '#ffffff',
+    secondary: '#a0a0a0',
+  }
+}
+```
+
+### Glassmorphism Style
+```css
+.glassmorphism {
+  background: rgba(17, 17, 17, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+```
+
 ## Components and Interfaces
+
+### Custom Cursor Component
+
+```typescript
+interface CustomCursorProps {
+  disabled?: boolean; // Disable on mobile
+}
+```
+
+**Behavior:**
+- Small circle (20px) follows mouse with smooth delay
+- Trailing dot (8px) follows with longer delay
+- Hidden on mobile devices
+- Changes size/color on hover over interactive elements
+
+### Scramble Text Component
+
+```typescript
+interface ScrambleTextProps {
+  text: string;
+  duration?: number;
+  className?: string;
+}
+```
+
+**Behavior:**
+- Characters randomly scramble through alphabet
+- Gradually settle to final text from left to right
+- Completes animation in ~2 seconds
+
+### Mouse Glow Component
+
+```typescript
+interface MouseGlowProps {
+  color?: string;
+  size?: number;
+  blur?: number;
+}
+```
+
+**Behavior:**
+- Radial gradient follows mouse position
+- Smooth transition with CSS transform
+- Disabled on mobile for performance
+
+### Infinite Marquee Component
+
+```typescript
+interface InfiniteMarqueeProps {
+  text: string;
+  speed?: number;
+}
+```
+
+**Behavior:**
+- Continuous horizontal scroll
+- Text: 'AI AUTOMATION • WEB DEVELOPMENT • CUSTOM SOFTWARE •'
+- Positioned in background with low opacity
+- Uses CSS animation for smooth performance
 
 ### Navigation Component
 
@@ -59,16 +151,16 @@ interface NavigationProps {
 ```
 
 **Behavior:**
-- Fixed position at top of viewport
-- Transparent background initially, solid on scroll
-- Smooth scroll to sections on link click
-- Mobile: hamburger menu with slide-in drawer
+- Sticky position with glassmorphism effect
+- Backdrop blur: 10px
+- Neon cyan underline on active section
+- Mobile: glassmorphism drawer menu
 
 ### Hero Section
 
 ```typescript
 interface HeroProps {
-  headline: string;
+  headline: string; // 'AROSAL Software Solutions'
   subheadline: string;
   ctaText: string;
   ctaHref: string;
@@ -77,10 +169,11 @@ interface HeroProps {
 
 **Behavior:**
 - Full viewport height
-- Animated text entrance (fade-in, slide-up)
-- CTA button scrolls to contact section
+- Scramble text effect for headline
+- Mouse-tracking glow in background
+- CTA button with neon cyan glow on hover
 
-### About Section
+### Stats Section
 
 ```typescript
 interface Statistic {
@@ -89,17 +182,15 @@ interface Statistic {
   suffix?: string;
 }
 
-interface AboutProps {
-  title: string;
-  description: string;
-  mission: string;
-  statistics: Statistic[];
+interface StatsProps {
+  statistics: Statistic[]; // ['50+ Projects', '50+ Happy Clients']
 }
 ```
 
 **Behavior:**
-- Counter animation triggers on viewport entry
-- Statistics displayed in a row/grid
+- Animated counters trigger on viewport entry
+- Count from 0 to target value in 2 seconds
+- Neon cyan accent on numbers
 
 ### Services Section
 
@@ -107,68 +198,43 @@ interface AboutProps {
 interface Service {
   id: string;
   icon: string;
-  title: string;
+  title: string; // 'AI Bot Services', 'In-house System Dev', 'Web Solutions'
   description: string;
 }
 
 interface ServicesProps {
   title: string;
-  subtitle: string;
   services: Service[];
 }
 ```
 
 **Behavior:**
-- Grid layout (1 col mobile, 2 col tablet, 4 col desktop)
-- Hover effect: scale and shadow increase
+- Grid layout with glassmorphism cards
+- Hover: expand scale (1.05) + neon cyan glow
+- Reveal-on-scroll animation
 
-### Portfolio Section
+### Portfolio Section (Bento Grid)
 
 ```typescript
 interface PortfolioItem {
   id: string;
-  title: string;
+  title: string; // 'Selectz.in', 'Katneswarkar', 'Pixcelcut.studio'
   category: string;
   imageUrl: string;
+  size: 'small' | 'medium' | 'large'; // For Bento Grid
 }
 
 interface PortfolioProps {
   title: string;
-  subtitle: string;
   items: PortfolioItem[];
 }
 ```
 
 **Behavior:**
-- Grid layout with staggered animation on scroll
-- Hover: overlay with title and category
-
-### Team Section
-
-```typescript
-interface SocialLink {
-  platform: 'twitter' | 'linkedin' | 'github' | 'dribbble';
-  url: string;
-}
-
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  imageUrl: string;
-  socialLinks: SocialLink[];
-}
-
-interface TeamProps {
-  title: string;
-  subtitle: string;
-  members: TeamMember[];
-}
-```
-
-**Behavior:**
-- Grid layout
-- Hover: reveal social links overlay
+- Asymmetric Bento Grid layout
+- 3D hover-tilt effect using Framer Motion (perspective transform)
+- Glassmorphism overlay with project info
+- Reveal-on-scroll with stagger
 
 ### Contact Section
 
@@ -183,18 +249,14 @@ interface ContactFormData {
 interface ContactProps {
   title: string;
   subtitle: string;
-  contactInfo: {
-    email: string;
-    phone: string;
-    address: string;
-  };
 }
 ```
 
 **Behavior:**
-- Form with validation
-- Success/error state handling
-- Contact info displayed alongside form
+- Minimal form with neon cyan borders on focus
+- Submit button: haptic feedback (scale + pulse + glow)
+- Success/error states with neon styling
+- Form validation with inline errors
 
 ### Footer Component
 
@@ -205,132 +267,88 @@ interface FooterProps {
   contactInfo: {
     email: string;
     phone: string;
-    address: string;
   };
 }
 ```
 
-## Data Models
+**Behavior:**
+- Glassmorphism background
+- Neon cyan accents on links
+- Social icons with hover glow
 
-### Site Content Data Structure
+## Custom Hooks
 
+### useMousePosition
 ```typescript
-interface SiteContent {
-  navigation: NavLink[];
-  hero: HeroProps;
-  about: AboutProps;
-  services: ServicesProps;
-  portfolio: PortfolioProps;
-  team: TeamProps;
-  contact: ContactProps;
-  footer: FooterProps;
+const useMousePosition = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  // Track mouse movement
+  return position;
 }
 ```
 
-### Form Validation Schema (Zod)
-
+### useAnimatedCounter
 ```typescript
-const contactFormSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
-  email: z.string().email("Invalid email format"),
-  subject: z.string().min(1, "Subject is required").max(200),
-  message: z.string().min(10, "Message must be at least 10 characters").max(1000),
-});
+const useAnimatedCounter = (target: number, duration: number) => {
+  const [count, setCount] = useState(0);
+  // Animate from 0 to target when in viewport
+  return count;
+}
 ```
 
+## Animation Specifications
 
+### Reveal on Scroll
+- Opacity: 0 → 1
+- Transform: translateY(50px) → translateY(0)
+- Duration: 0.6s
+- Easing: ease-out
 
-## Correctness Properties
+### 3D Tilt Effect (Portfolio)
+- Framer Motion perspective: 1000px
+- Rotate on hover based on mouse position
+- Max rotation: ±15 degrees
+- Smooth spring animation
 
-*A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+### Haptic Button Feedback
+- Scale: 1 → 0.95 (on click)
+- Box-shadow: neon cyan glow increase
+- Duration: 150ms
+- Spring animation
 
-Based on the acceptance criteria analysis, the following testable properties have been identified:
+## Responsive Behavior
 
-### Property 1: Statistics rendering completeness
-*For any* valid statistics array passed to the About section, all statistics should render with their value and label visible in the DOM.
-**Validates: Requirements 3.3**
+### Desktop (>1024px)
+- All effects enabled
+- Multi-column layouts
+- Custom cursor active
+- Mouse glow active
 
-### Property 2: Services rendering completeness
-*For any* valid services array passed to the Services section, all service cards should render with their icon, title, and description visible in the DOM.
-**Validates: Requirements 4.2**
+### Tablet (768-1024px)
+- 2-column layouts
+- Custom cursor disabled
+- Mouse glow disabled
+- Simplified animations
 
-### Property 3: Portfolio items rendering completeness
-*For any* valid portfolio items array passed to the Portfolio section, all items should render with their image and title visible in the DOM.
-**Validates: Requirements 5.2**
+### Mobile (<768px)
+- Single-column layouts
+- All mouse-based effects disabled
+- Touch-optimized interactions
+- Reduced animation complexity
 
-### Property 4: Team members rendering completeness
-*For any* valid team members array passed to the Team section, all members should render with their photo, name, and role visible in the DOM.
-**Validates: Requirements 6.2**
+## Performance Optimizations
 
-### Property 5: Form validation rejects invalid data
-*For any* form submission with invalid data (empty required fields or malformed email), the form should display appropriate validation error messages and prevent submission.
-**Validates: Requirements 7.3, 7.4**
-
-### Property 6: Email format validation
-*For any* string that does not match a valid email format (missing @, missing domain, etc.), the email field should display a validation error.
-**Validates: Requirements 7.5**
-
-## Error Handling
-
-### Form Submission Errors
-- Display inline validation errors for each invalid field
-- Show a general error message if form submission fails
-- Maintain form state on error to allow correction
-
-### Image Loading Errors
-- Display placeholder images if portfolio/team images fail to load
-- Use Next.js Image component with fallback handling
-
-### Navigation Errors
-- Gracefully handle missing section IDs
-- Provide visual feedback if scroll target doesn't exist
-
-## Testing Strategy
-
-### Testing Framework
-- **Unit/Component Testing**: Vitest + React Testing Library
-- **Property-Based Testing**: fast-check
-- **E2E Testing**: Playwright (optional)
-
-### Unit Testing Approach
-Unit tests will cover:
-- Component rendering with various props
-- Form validation logic
-- Navigation link generation
-- Utility functions
-
-### Property-Based Testing Approach
-Property-based tests will use fast-check to verify:
-- Components correctly render all items in arrays of varying sizes
-- Form validation correctly identifies all invalid inputs
-- Email validation handles edge cases
-
-Each property-based test MUST:
-- Run a minimum of 100 iterations
-- Be tagged with a comment referencing the correctness property: `**Feature: agency-portfolio-website, Property {number}: {property_text}**`
-- Use smart generators that constrain to valid input spaces
-
-### Test File Structure
-```
-src/
-├── components/
-│   ├── __tests__/
-│   │   ├── About.test.tsx
-│   │   ├── Services.test.tsx
-│   │   ├── Portfolio.test.tsx
-│   │   ├── Team.test.tsx
-│   │   └── ContactForm.test.tsx
-│   └── __tests__/
-│       └── properties.test.ts  (property-based tests)
-└── lib/
-    └── __tests__/
-        └── validation.test.ts
-```
+1. **Custom Cursor**: Use CSS transform for 60fps
+2. **Mouse Glow**: Throttle mouse events to 60fps
+3. **Marquee**: Use CSS animation instead of JS
+4. **Images**: Next.js Image with lazy loading
+5. **Animations**: Use Framer Motion's layout animations
+6. **Mobile**: Disable resource-intensive effects
 
 ## File Structure
 
 ```
-agency-portfolio/
+arosal-portfolio/
 ├── app/
 │   ├── layout.tsx
 │   ├── page.tsx
@@ -338,26 +356,30 @@ agency-portfolio/
 ├── components/
 │   ├── Navigation.tsx
 │   ├── Hero.tsx
-│   ├── About.tsx
+│   ├── Stats.tsx
 │   ├── Services.tsx
 │   ├── Portfolio.tsx
-│   ├── Team.tsx
 │   ├── Contact.tsx
 │   ├── Footer.tsx
+│   ├── CustomCursor.tsx
+│   ├── ScrambleText.tsx
+│   ├── MouseGlow.tsx
+│   ├── InfiniteMarquee.tsx
 │   └── ui/
-│       ├── Button.tsx
-│       ├── Card.tsx
-│       ├── Input.tsx
-│       └── SectionContainer.tsx
+│       ├── Button.tsx (neon styling)
+│       ├── Card.tsx (glassmorphism)
+│       └── Input.tsx (neon borders)
 ├── hooks/
+│   ├── useMousePosition.ts
+│   ├── useAnimatedCounter.ts
 │   ├── useScrollAnimation.ts
 │   └── useIntersectionObserver.ts
 ├── lib/
-│   ├── data.ts (site content)
+│   ├── data.ts
 │   └── validation.ts
-├── public/
-│   └── images/
-├── package.json
-├── tailwind.config.ts
-└── tsconfig.json
+└── tailwind.config.ts (dark theme + neon colors)
 ```
+
+## Testing Strategy
+
+Focus on visual regression testing and interaction testing for the advanced effects. Unit tests for utility functions and hooks.

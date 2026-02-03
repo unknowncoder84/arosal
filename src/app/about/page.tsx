@@ -193,13 +193,13 @@ export default function AboutPage() {
                 partner for businesses seeking digital transformation.
               </p>
               <p>
-                Over the past 5+ years, we've had the privilege of working with over 100 clients 
+                Over the past 5+ years, we&apos;ve had the privilege of working with over 100 clients 
                 across various industries, delivering 60+ successful projects that have helped 
                 businesses streamline operations, engage customers, and achieve sustainable growth.
               </p>
               <p>
                 Our journey has been marked by continuous learning, adaptation, and innovation. 
-                We've evolved from a web development agency to a comprehensive digital solutions 
+                We&apos;ve evolved from a web development agency to a comprehensive digital solutions 
                 provider, offering AI automation, custom software development, and enterprise 
                 solutions that address the complex challenges of modern businesses.
               </p>
@@ -418,7 +418,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8 text-white/90">
               Join over 100 satisfied clients who have transformed their businesses with AROSAL. 
-              Let's discuss how we can help you achieve your digital goals.
+              Let&apos;s discuss how we can help you achieve your digital goals.
             </p>
             <Link href="/contact">
               <Button className="bg-white text-professional-accent hover:bg-cream-50 px-8 py-4 text-lg font-semibold shadow-xl">

@@ -369,7 +369,7 @@ export default function HomePage() {
               Ready to Start Your Project?
             </h2>
             <p className="text-xl text-white/90 mb-8 leading-relaxed">
-              Let's transform your ideas into reality. Get in touch with us today 
+              Let&apos;s transform your ideas into reality. Get in touch with us today 
               for a free consultation and discover how we can help your business grow.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">

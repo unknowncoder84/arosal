@@ -69,7 +69,7 @@ export default function ContactPage() {
               Get In <span className="text-professional-accent">Touch</span>
             </h1>
             <p className="text-xl text-professional-gray max-w-3xl mx-auto leading-relaxed">
-              Have a project in mind? Let's discuss how we can help bring your vision to life.
+              Have a project in mind? Let&apos;s discuss how we can help bring your vision to life.
             </p>
           </motion.div>
 
@@ -164,7 +164,7 @@ export default function ContactPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center text-green-600 font-semibold"
                   >
-                    Thank you! We'll get back to you soon.
+                    Thank you! We&apos;ll get back to you soon.
                   </motion.div>
                 )}
               </form>

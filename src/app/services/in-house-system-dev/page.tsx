@@ -136,7 +136,7 @@ export default function InHouseSystemDevPage() {
               Core Capabilities
             </h2>
             <p className="text-lg text-professional-gray max-w-2xl mx-auto">
-              Enterprise-grade development services tailored to your organization's needs
+              Enterprise-grade development services tailored to your organization&apos;s needs
             </p>
           </motion.div>
 
@@ -233,7 +233,7 @@ export default function InHouseSystemDevPage() {
                 Why Build Custom Systems?
               </h2>
               <p className="text-lg text-professional-gray mb-8">
-                Off-the-shelf solutions can't always meet your unique needs. Our custom development 
+                Off-the-shelf solutions can&apos;t always meet your unique needs. Our custom development 
                 ensures perfect alignment with your business processes.
               </p>
               <div className="space-y-4">
@@ -307,7 +307,7 @@ export default function InHouseSystemDevPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Let's Build Something Great Together
+              Let&apos;s Build Something Great Together
             </h2>
             <p className="text-xl text-white/90 mb-8">
               Transform your business operations with custom-built systems designed for success

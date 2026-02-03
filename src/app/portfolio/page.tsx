@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Code, Palette, Zap } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 
 export default function PortfolioPage() {
@@ -151,12 +152,13 @@ export default function PortfolioPage() {
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-cream-200 hover:shadow-2xl transition-all duration-300"
               >
                 <div className="relative h-64 overflow-hidden">
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-professional-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-professional-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 z-10">
                     <Button className="bg-white text-professional-dark hover:bg-cream-50">
                       View Project
                       <ExternalLink className="ml-2 w-4 h-4" />
@@ -197,10 +199,10 @@ export default function PortfolioPage() {
             className="bg-gradient-to-br from-professional-accent to-professional-gold rounded-3xl p-12 md:p-16 text-center text-white"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              Let's Build Your Next Project
+              Let&apos;s Build Your Next Project
             </h2>
             <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8 text-white/90">
-              Ready to bring your vision to life? Let's create something amazing together.
+              Ready to bring your vision to life? Let&apos;s create something amazing together.
             </p>
             <Link href="/contact">
               <Button className="bg-white text-professional-accent hover:bg-cream-50 px-8 py-4 text-lg font-semibold">

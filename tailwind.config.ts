@@ -31,9 +31,9 @@ const config: Config = {
         professional: {
           dark: '#1a1a1a',
           gray: '#4a4a4a',
-          light: '#f8f6f3',
-          accent: '#d4a574',
-          gold: '#c9a96e',
+          light: '#e0f2fe',
+          accent: '#0ea5e9',
+          gold: '#38bdf8',
         },
         // Dark mode backgrounds
         background: {

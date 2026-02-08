@@ -28,7 +28,7 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-cream-200 shadow-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-cream-50/80 backdrop-blur-lg border-b border-cream-200 shadow-sm"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -92,7 +92,7 @@ export default function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-cream-200"
+            className="md:hidden bg-cream-50 border-t border-cream-200"
           >
             <div className="px-4 py-4 space-y-2">
               {links.map((link, index) => (
